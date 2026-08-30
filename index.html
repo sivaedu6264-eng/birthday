@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise ✨</title>
+    <meta name="description" content="A cinematic birthday surprise experience created just for you.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Sacramento&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Dynamic Background Canvases -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+    <!-- Floating Audio Control -->
+    <div id="audio-control" class="audio-control floating-widget hidden" title="Toggle Music">
+        <button id="music-toggle-btn" class="music-btn" aria-label="Toggle Background Music">
+            <span class="music-note-icon">🎵</span>
+            <span class="music-icon icon-play hidden">▶</span>
+            <span class="music-icon icon-pause">⏸</span>
+        </button>
+        <span class="music-label">Birthday Melody</span>
+        <div class="sound-wave" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+    <audio id="bg-music" loop preload="auto">
+        <source src="assets/audio/birthday-song.mp3" type="audio/mpeg">
+        <source src="assets/audio/birthday-song.wav" type="audio/wav">
+        <source src="assets/audio/birthday.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Main Experience Container -->
+    <main id="app-container">
+
+        <!-- 1. "DO YOU LOVE ME?" INTERACTIVE SCREEN (NO NAME BEFORE COUNTDOWN) -->
+        <section id="screen-love-question" class="screen active" aria-labelledby="love-question-text">
+            <div class="glass-card love-card">
+                <span class="badge-pill">A Quick Question First</span>
+                <h1 id="love-question-text" class="title-glow">Do you love me? ❤️</h1>
+                <p id="love-sub-text" class="subtitle">Choose wisely... 👀</p>
+                
+                <div id="love-buttons-zone" class="love-buttons-container">
+                    <button id="btn-love-yes" class="btn btn-primary btn-yes-love glow-pulse">
+                        YES ❤️
+                    </button>
+                    <button id="btn-love-no" class="btn btn-secondary btn-no-playful">
+                        NO 😏
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. UNLOCKING SURPRISE LOADING SCREEN (NO NAME BEFORE COUNTDOWN) -->
+        <section id="screen-loading" class="screen hidden" aria-live="polite">
+            <div class="glass-card loading-card">
+                <div class="glowing-spinner" aria-hidden="true">
+                    <div class="circle"></div>
+                    <div class="sparkle">✨</div>
+                </div>
+                <p id="loading-text" class="loading-phrase">Preparing something special...</p>
+                <div class="progress-bar-container">
+                    <div id="loading-progress" class="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. WELCOME SCREEN (NO NAME BEFORE COUNTDOWN) -->
+        <section id="screen-welcome" class="screen hidden">
+            <div class="glass-card welcome-card">
+                <span class="badge-pill">A Special Birthday Journey</span>
+                <h1 id="welcome-title" class="title-glow">Hey 👀</h1>
+                <p id="welcome-sub" class="subtitle">I made something special for you...</p>
+                <button id="btn-start" class="btn btn-primary glow-pulse">
+                    ✨ START THE JOURNEY
+                </button>
+            </div>
+        </section>
+
+        <!-- 4. COUNTDOWN SCREEN (NAME REVEALED HERE!) -->
+        <section id="screen-countdown" class="screen hidden">
+            <div class="glass-card countdown-card">
+                <span class="countdown-caption">Get Ready...</span>
+                <div id="countdown-number" class="countdown-digit">3</div>
+                <h2 id="countdown-reveal" class="birthday-reveal-title hidden">
+                    🎉 HAPPY BIRTHDAY 🎉<br><span class="highlight-name" style="color: #ff69b4; text-shadow: 0 0 8px #ff69b4, 0 0 16px #ff1493, 0 0 28px #ff69b4;">❤️ NAGII BANGARAM ❤️</span>
+                </h2>
+                <button id="btn-after-countdown" class="btn btn-secondary hidden margin-top">
+                    Continue to Cake 🎂
+                </button>
+            </div>
+        </section>
+
+        <!-- 5. ANIMATED BIRTHDAY CAKE & BLOW CANDLES SCREEN -->
+        <section id="screen-cake" class="screen hidden">
+            <div class="glass-card cake-card">
+                <span class="section-tag">Birthday Tradition</span>
+                <h2 id="cake-heading" class="section-heading">Make a wish, Nagii Bangaram ✨</h2>
+                <p class="section-desc">Close your eyes and make a special birthday wish.</p>
+
+                <!-- Interactive CSS Cake Container -->
+                <div class="cake-stage" aria-hidden="true">
+                    <div id="birthday-cake" class="cake-box">
+                        <div class="plate"></div>
+                        <div class="cake-tier cake-tier-bottom">
+                            <div class="frosting"></div>
+                        </div>
+                        <div class="cake-tier cake-tier-top">
+                            <div class="frosting"></div>
+                            <!-- Candles -->
+                            <div class="candle candle-1">
+                                <div class="flame flame-1"></div>
+                                <div class="smoke smoke-1"></div>
+                            </div>
+                            <div class="candle candle-2">
+                                <div class="flame flame-2"></div>
+                                <div class="smoke smoke-2"></div>
+                            </div>
+                            <div class="candle candle-3">
+                                <div class="flame flame-3"></div>
+                                <div class="smoke smoke-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cake Controls -->
+                <div class="cake-interaction-zone">
+                    <button id="btn-blow-candles" class="btn btn-accent glow-pulse margin-top">
+                        ✨ BLOW THE CANDLES
+                    </button>
+                    <p id="cake-wish-status" class="wish-status-text hidden font-sacramento">
+                        Wish made, Nagii Bangaram? ❤️
+                    </p>
+                    <button id="btn-after-cake" class="btn btn-primary hidden margin-top">
+                        CONTINUE →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. THE ONE PHOTO REVEAL & TRANSFORMATION -->
+        <section id="screen-photo-reveal" class="screen hidden">
+            <div class="glass-card photo-reveal-card">
+                <div class="header-prompt">
+                    <span class="section-tag">Memories</span>
+                    <h2 class="subheading">There's one thing I wanted to show you...</h2>
+                </div>
+
+                <!-- Interactive Photo Frame Container -->
+                <div class="photo-experience-container">
+                    <div id="photo-frame-wrapper" class="photo-frame-wrapper glow-aura">
+                        <div class="photo-backdrop-blur"></div>
+                        <img id="main-friend-photo" src="assets/images/friend.jpg" alt="Nagii Bangaram" class="hero-photo">
+                        <div class="photo-overlay-sparkles"></div>
+                        <div class="photo-frame-border"></div>
+                    </div>
+                    
+                    <p class="photo-caption font-sacramento">"This is you, Nagii Bangaram ❤️"</p>
+
+                    <!-- Interactive Photo Effect Controls -->
+                    <div class="photo-controls">
+                        <span class="control-label">Interactive Photo Effects:</span>
+                        <div class="button-group">
+                            <button id="fx-zoom" class="chip-btn active">🔍 Soft Zoom</button>
+                            <button id="fx-glow" class="chip-btn">✨ Ambient Glow</button>
+                            <button id="fx-particles" class="chip-btn">🌌 Star Ring</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-to-words" class="btn btn-primary margin-top">
+                    A Few Words For You 💌
+                </button>
+            </div>
+        </section>
+
+        <!-- 7. PERSONAL BIRTHDAY MESSAGE -->
+        <section id="screen-words" class="screen hidden">
+            <div class="glass-card words-card">
+                <span class="section-tag">From The Heart</span>
+                <h2 class="section-heading">I wanted to tell you something, Nagii Bangaram... 💌</h2>
+                
+                <div class="message-paper">
+                    <span class="quote-mark font-cinzel" aria-hidden="true">“</span>
+                    <p id="words-text-container" class="words-text">
+                        <!-- Animated message text injected via script.js -->
+                    </p>
+                    <span class="signature font-sacramento">- Yours Always ❤️</span>
+                </div>
+
+                <button id="btn-to-gift" class="btn btn-primary">
+                    One Last Surprise 🎁
+                </button>
+            </div>
+        </section>
+
+        <!-- 8. FINAL SURPRISE GIFT BOX -->
+        <section id="screen-gift" class="screen hidden">
+            <div class="glass-card gift-card">
+                <span class="section-tag">The Grand Finale</span>
+                <h2 class="section-heading">One last surprise for Nagii Bangaram...</h2>
+                <p class="section-desc">You've reached the end... But there's one last surprise.</p>
+
+                <!-- Animated Interactive Gift Box -->
+                <div class="gift-box-wrapper" aria-hidden="true">
+                    <div id="gift-box" class="gift-box wobble-animation">
+                        <div class="gift-lid">
+                            <div class="bow"></div>
+                        </div>
+                        <div class="gift-body"></div>
+                        <div class="gift-glow"></div>
+                    </div>
+                </div>
+
+                <button id="btn-open-gift" class="btn btn-accent glow-pulse margin-top">
+                    🎁 OPEN YOUR GIFT
+                </button>
+            </div>
+        </section>
+
+        <!-- 9. FINAL PHOTO PRESENTATION & BIRTHDAY WISH -->
+        <section id="screen-final-reveal" class="screen hidden">
+            <div class="glass-card final-reveal-card">
+                <div class="final-header">
+                    <span class="sparkle-tag font-sacramento">Forever & Always</span>
+                    <h1 id="final-bday-header" class="final-title">HAPPY BIRTHDAY</h1>
+                    <h2 id="final-friend-name" class="final-name">NAGII BANGARAM ❤️</h2>
+                </div>
+
+                <!-- Elegant Portrait Frame Presentation -->
+                <div class="cinematic-portrait-card glow-aura">
+                    <div class="portrait-image-wrapper">
+                        <img id="final-friend-photo" src="assets/images/friend.jpg" alt="Nagii Bangaram" class="portrait-photo">
+                        <div class="portrait-overlay-gradient"></div>
+                    </div>
+                    <div class="portrait-footer">
+                        <p id="final-sub-caption" class="portrait-quote font-sacramento">Keep smiling. Keep being you. ✨</p>
+                    </div>
+                </div>
+
+                <div class="final-message-container">
+                    <p id="final-bday-message" class="final-message-text">
+                        Here's to another year of happiness, success, laughter and amazing memories.
+                    </p>
+                </div>
+
+                <button id="btn-to-ending" class="btn btn-primary margin-top">
+                    Continue to Ending 🌌
+                </button>
+            </div>
+        </section>
+
+        <!-- 10. CINEMATIC ENDING -->
+        <section id="screen-ending" class="screen hidden">
+            <div class="glass-card ending-card">
+                <div class="ending-stars-cluster" aria-hidden="true">✨ 🌟 ✨</div>
+                <h2 class="ending-heartfelt font-sacramento">This little surprise was made just for you, Nagii Bangaram. ❤️</h2>
+                <h1 class="ending-title font-cinzel">HAPPY BIRTHDAY, NAGII BANGARAM 🎂</h1>
+                <p class="ending-wish-sub">May all your dreams and wishes come true this year.</p>
+
+                <button id="btn-replay" class="btn btn-secondary margin-top">
+                    🔄 Replay Experience
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Main JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
